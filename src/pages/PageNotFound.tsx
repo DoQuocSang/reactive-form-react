@@ -1,4 +1,4 @@
-import { CircleXIcon, Pointer } from "lucide-react";
+import { Pointer } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function PageNotFound() {
