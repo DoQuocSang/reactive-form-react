@@ -12,7 +12,7 @@ export default function VariantForm() {
   const quantityRange: IRange = { min: 0, max: 1000 };
 
   const isShowVariantForm = useProductStore((state) => state.isShowVariantForm);
-  const toogleVariantForm = useProductStore((state) => state.toogleVariantForm);
+  const toggleVariantForm = useProductStore((state) => state.toggleVariantForm);
 
   function onSubmit() {}
   return (
@@ -21,7 +21,7 @@ export default function VariantForm() {
         <div className="fixed inset-0 z-[99]">
           <div className="relative w-full min-h-screen flex justify-center items-center">
             <div
-              onClick={() => toogleVariantForm()}
+              onClick={() => toggleVariantForm()}
               className="absolute z-10 top-0 left-0 bg-black opacity-50 w-full h-full"
             ></div>
 
@@ -30,7 +30,7 @@ export default function VariantForm() {
                 <h3 className="text-slate-700 py-1 max-w-fit font-medium text-xl">
                   Variant detail
                 </h3>
-                <button type="button" onClick={() => toogleVariantForm()}>
+                <button type="button" onClick={() => toggleVariantForm()}>
                   <XIcon size={20} className="my-icon text-slate-500" />
                 </button>
               </div>
@@ -99,7 +99,7 @@ export default function VariantForm() {
               <div className="pt-6 flex justify-end items-center gap-4">
                 <button
                   type="button"
-                  onClick={() => toogleVariantForm()}
+                  onClick={() => toggleVariantForm()}
                   className="flex-1/2 text-md font-medium border border-slate-300 text-slate-700 hover:bg-slate-400 hover:text-white px-3.5 py-2 rounded-md"
                 >
                   Cancel

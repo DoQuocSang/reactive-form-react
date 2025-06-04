@@ -11,6 +11,9 @@ export function useProduct(productId: string) {
   const [productData, setProductData] = useState<IProduct>(DEFAULT_PRODUCT);
 
   const getProductById = useProductStore((state) => state.getProductById);
+  const updateFormData = useProductStore((state) => state.updateFormData);
+  const isShowPopup = useProductStore((state) => state.isShowPopup);
+  const togglePopup = useProductStore((state) => state.togglePopup);
 
   const {
     register,
@@ -68,6 +71,8 @@ export function useProduct(productId: string) {
 
   const onSubmit: SubmitHandler<IProduct> = (data) => {
     console.log("Form submitted:", data);
+    updateFormData(data);
+    togglePopup();
   };
 
   return {
@@ -92,6 +97,7 @@ export function useProduct(productId: string) {
     onSubmit,
     getValues,
     setValue,
-    setProductData
+    setProductData,
+    isShowPopup,
   };
 }

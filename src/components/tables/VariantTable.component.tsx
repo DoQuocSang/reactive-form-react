@@ -12,7 +12,7 @@ export default function VariantTable({ productId }: IVariantTableProps) {
   const { getVariantsByProductId } = useVariant();
   const variants = getVariantsByProductId(productId);
 
-  const toogleVariantForm = useProductStore((state) => state.toogleVariantForm);
+  const toggleVariantForm = useProductStore((state) => state.toggleVariantForm);
 
   function deleteAllVariants() {}
   return (
@@ -22,7 +22,7 @@ export default function VariantTable({ productId }: IVariantTableProps) {
           <h3 className="font-medium">Variant</h3>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => toogleVariantForm()}
+              onClick={() => toggleVariantForm()}
               type="button"
               className="font-medium bg-teal-500 text-white text-xs px-3.5 py-2 rounded-md"
             >
