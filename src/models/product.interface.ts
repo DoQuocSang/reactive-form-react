@@ -10,7 +10,7 @@ export const DEFAULT_PRODUCT: IProduct = {
   description: "",
   weight: 0,
   dateStock: "",
-  price: 0,
+  price: null,
   type: "",
   images: [],
   variants: [],
@@ -22,15 +22,15 @@ export const DEFAULT_PRODUCT: IProduct = {
 export interface IProduct {
   id: string;
   name: string;
-  brand?: string;
-  description: string;
-  weight: number;
-  dateStock: string;
-  price: number;
-  type?: string;
+  brand: string;
+  description?: string;
+  weight?: number;
+  dateStock?: string;
+  price: number | null;
+  type: string;
   images: IUploadFile[];
   variants: IVariant[];
-  tags: ITag[];
+  tags?: ITag[];
   visible: boolean;
   offer?: IOffer;
 }

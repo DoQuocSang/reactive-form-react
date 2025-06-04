@@ -5,7 +5,7 @@ import type { IRange } from "../models/range.interface";
 export function preventInvalidValueForNumberInput(
   e: React.KeyboardEvent<HTMLInputElement>
 ) {
-  const invalidChars = ["e", "E", "+", "-", "."];
+  const invalidChars = ["e", "E", "+", "-"];
 
   if (invalidChars.includes(e.key)) {
     e.preventDefault();
@@ -25,5 +25,8 @@ export function autoAdjustValidValueForNumberInput(
     setValue(fieldName, range.max);
   } else if (value < range.min) {
     setValue(fieldName, range.min);
+  } else {
+    const rounded = Math.floor(value * 100) / 100;
+    setValue(fieldName, rounded);
   }
 }

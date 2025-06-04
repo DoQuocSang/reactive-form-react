@@ -88,9 +88,6 @@ export default function VariantForm() {
                   max={quantityRange.max}
                   step={10}
                   onKeyDown={preventInvalidValueForNumberInput}
-                  onInput={(e) =>
-                    autoAdjustValidValueForNumberInput(e, quantityRange)
-                  }
                   className="pb-2 focus:outline-none border-b focus:border-b-2 border-gray-300 focus:border-teal-500 transition duration-100 ease-in-out"
                   placeholder="Type name"
                 />
