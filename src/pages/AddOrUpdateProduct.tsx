@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import ProductForm from "../components/form/ProductForm.component";
+import ProductForm from "../components/forms/ProductForm.component";
 import { useEffect } from "react";
 
 export default function AddOrUpdateProduct() {

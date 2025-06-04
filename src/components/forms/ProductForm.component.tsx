@@ -5,16 +5,22 @@ import {
   CloudUpload,
   DollarSign,
   Image,
+  XIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import VariantTable from "../table/VariantTable.component";
+import VariantTable from "../tables/VariantTable.component";
 import type { IRange } from "../../models/range.interface";
 import {
   autoAdjustValidValueForNumberInput,
   preventInvalidValueForNumberInput,
 } from "../../helper/numberInput.helper";
-import { useProductStore } from "../store/product.store";
+import { useProductStore } from "../../store/product.store";
 import { DEFAULT_PRODUCT, type IProduct } from "../../models/product.interface";
+import { useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
+import { BRANDS } from "../../data/brands.data";
+import { TYPES } from "../../data/types.data";
+import { TAGS } from "../../data/tags.data";
+import type { ITag } from "../../models/tag.interface";
 
 interface IProductFormProps {
   productId: string;
@@ -30,12 +36,50 @@ export default function ProductForm({ productId }: IProductFormProps) {
 
   const getProductById = useProductStore((state) => state.getProductById);
 
+  const { register, handleSubmit, watch, reset, control } = useForm<IProduct>();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "tags",
+  });
+
+  const [inputValue, setInputValue] = useState("");
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const value = inputValue.trim();
+      if (value) {
+        const tag: ITag = {
+          id: "demo",
+          name: value,
+        };
+        append(tag);
+        setInputValue("");
+      }
+    }
+  };
+
+  const handleDelete = (index: number) => {
+    remove(index);
+  };
+
+  const discount = watch("offer.percent") ?? 0;
+
+  const onSubmit: SubmitHandler<IProduct> = (data) => {
+    console.log("Form submitted");
+    console.log(data);
+  };
+
+  const priceRange: IRange = { min: 0, max: 1000000 };
+
   useEffect(() => {
     const productResult = getProductById(productId);
     setProductData(productResult);
-  }, [productId]);
-
-  const priceRange: IRange = { min: 0, max: 1000000 };
+    if (productResult) {
+      reset(productResult);
+    }
+  }, [productId, reset]);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col justify-center sm:py-16">
@@ -53,7 +97,7 @@ export default function ProductForm({ productId }: IProductFormProps) {
                 </p>
               </div>
             </div>
-            <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:leading-7">
                 {/* --- Name --- */}
                 <div className="flex flex-col gap-2">
@@ -61,6 +105,7 @@ export default function ProductForm({ productId }: IProductFormProps) {
                     Name
                   </label>
                   <input
+                    {...register("name")}
                     type="text"
                     className="pb-2 focus:outline-none border-b focus:border-b-2 border-gray-300 focus:border-teal-500 transition duration-100 ease-in-out"
                     placeholder="Type name"
@@ -74,12 +119,19 @@ export default function ProductForm({ productId }: IProductFormProps) {
                   </label>
                   <div className="relative w-full">
                     <select
+                      {...register("brand")}
                       name="brand"
                       id="brand"
                       className="px-4 py-2 w-full appearance-none text-slate-700 focus:outline-none rounded-lg border border-gray-300 focus:border-2 focus:border-teal-500 focus:rounded-md transition duration-100 ease-in-out"
                     >
                       <option value="">Choose a brand</option>
-                      <option value="i">item</option>
+                      {BRANDS.map((brand) => {
+                        return (
+                          <option key={brand.id} value={brand.value}>
+                            {brand.label}
+                          </option>
+                        );
+                      })}
                     </select>
 
                     <ChevronDown
@@ -158,43 +210,34 @@ export default function ProductForm({ productId }: IProductFormProps) {
                   )}
                 </div>
 
-                {/* --- Status --- */}
+                {/* --- Type --- */}
                 <div className="flex flex-col gap-2">
                   <label htmlFor="brand" className="font-semibold">
                     Type
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-                    <label>
-                      <input
-                        type="radio"
-                        value="1"
-                        className="peer hidden"
-                        name="type"
-                      />
-                      <div className="hover:bg-gray-50 flex items-center justify-between px-4 py-2 border-2 rounded-lg cursor-pointer text-sm border-gray-200 group peer-checked:border-blue-500">
-                        <h2 className="font-medium text-slate-700">Shoes</h2>
-                        <CheckCircle2
-                          size={20}
-                          className="text-blue-500 invisible group-[.peer:checked+&]:visible"
-                        />
-                      </div>
-                    </label>
-
-                    <label>
-                      <input
-                        type="radio"
-                        value="1"
-                        className="peer hidden"
-                        name="type"
-                      />
-                      <div className="hover:bg-gray-50 flex items-center justify-between px-4 py-2 border-2 rounded-lg cursor-pointer text-sm border-gray-200 group peer-checked:border-blue-500">
-                        <h2 className="font-medium text-slate-700">Boots</h2>
-                        <CheckCircle2
-                          size={20}
-                          className="text-blue-500 invisible group-[.peer:checked+&]:visible"
-                        />
-                      </div>
-                    </label>
+                    {TYPES.map((type) => {
+                      return (
+                        <label key={type.id}>
+                          <input
+                            {...register("type")}
+                            type="radio"
+                            value={type.value}
+                            className="peer hidden"
+                            name="type"
+                          />
+                          <div className="hover:bg-gray-50 flex items-center justify-between px-4 py-2 border-2 rounded-lg cursor-pointer text-sm border-gray-200 group peer-checked:border-blue-500">
+                            <h2 className="font-medium text-slate-700">
+                              {type.label}
+                            </h2>
+                            <CheckCircle2
+                              size={20}
+                              className="text-blue-500 invisible group-[.peer:checked+&]:visible"
+                            />
+                          </div>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -205,6 +248,7 @@ export default function ProductForm({ productId }: IProductFormProps) {
                   </label>
                   <div className="relative">
                     <input
+                      {...register("price")}
                       type="number"
                       placeholder="0.00"
                       min={priceRange.min}
@@ -233,16 +277,31 @@ export default function ProductForm({ productId }: IProductFormProps) {
                     type="text"
                     className="pb-2 focus:outline-none border-b focus:border-b-2 border-gray-300 focus:border-teal-500 transition duration-100 ease-in-out"
                     placeholder="Type tag"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
                   />
                   <datalist id="tags">
-                    <option value="male" />
-                    <option value="female" />
-                    <option value="sport" />
-                    <option value="unisex" />
-                    <option value="sneakers" />
-                    <option value="formal" />
-                    <option value="casual" />
+                    {TAGS.map((tag) => {
+                      return <option key={tag.id} value={tag.name} />;
+                    })}
                   </datalist>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {fields.map((field, index) => (
+                      <div
+                        key={field.id}
+                        className="flex justify-center items-center gap-1 px-2.5 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs"
+                      >
+                        <p className="leading-none">{field.name}</p>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(index)}
+                        >
+                          <XIcon size={10} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* --- Description --- */}
@@ -251,6 +310,7 @@ export default function ProductForm({ productId }: IProductFormProps) {
                     Description
                   </label>
                   <textarea
+                    {...register("description")}
                     className="px-4 py-2 rounded-lg focus:outline-none border focus:border-2 border-gray-300 focus:border-teal-500 transition duration-100 ease-in-out"
                     placeholder="Optional"
                     rows={3}
@@ -264,15 +324,17 @@ export default function ProductForm({ productId }: IProductFormProps) {
                       Discount
                     </label>
                     <p className="text-slate-700 mx-2 text-sm px-2 py-1 bg-slate-200 rounded-md">
-                      30%
+                      {discount}%
                     </p>
                   </div>
 
                   <input
+                    {...register("offer.percent")}
                     type="range"
                     min="0"
                     max="100"
                     step="1"
+                    value={discount}
                     className="w-full h-2"
                   />
                 </div>
@@ -284,9 +346,9 @@ export default function ProductForm({ productId }: IProductFormProps) {
                       Offer start
                     </label>
                     <input
+                      {...register("offer.start")}
                       type="date"
                       className="px-4 py-2 border focus:ring-gray-500 focus:border-teal-500 focus:border-2  w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                      placeholder="25/02/2020"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -294,9 +356,9 @@ export default function ProductForm({ productId }: IProductFormProps) {
                       Offer end
                     </label>
                     <input
+                      {...register("offer.end")}
                       type="date"
                       className="px-4 py-2 border focus:ring-gray-500 focus:border-teal-500 focus:border-2  w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                      placeholder="26/02/2020"
                     />
                   </div>
                 </div>
@@ -310,6 +372,7 @@ export default function ProductForm({ productId }: IProductFormProps) {
                   </label>
                   <div className="w-5 h-5 relative">
                     <input
+                      {...register("visible")}
                       name="visible"
                       type="checkbox"
                       id="visible"
@@ -333,11 +396,14 @@ export default function ProductForm({ productId }: IProductFormProps) {
                 <button className="font-medium flex justify-center items-center border border-slate-300 w-full text-slate-700 px-4 py-3 rounded-md focus:outline-none hover:bg-slate-100 transition duration-100 ease-in-out cursor-pointer">
                   Cancel
                 </button>
-                <button className="font-medium bg-teal-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none cursor-pointer">
+                <button
+                  type="submit"
+                  className="font-medium bg-teal-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none cursor-pointer"
+                >
                   Submit
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import type { IVariant } from "../../models/variant.interface";
-import VariantForm from "../form/VariantForm.component";
-import { useVariant } from "../hooks/useVariant";
-import { useProductStore } from "../store/product.store";
+import VariantForm from "../forms/VariantForm.component";
+import { useVariant } from "../../hooks/useVariant";
+import { useProductStore } from "../../store/product.store";
 import VariantRow from "./VariantRow.component";
 
 interface IVariantTableProps {
@@ -50,7 +50,7 @@ export default function VariantTable({ productId }: IVariantTableProps) {
               </thead>
               <tbody>
                 {getVariantsByProductId(productId).map((variant: IVariant) => (
-                  <VariantRow item={variant} />
+                  <VariantRow key={variant.id} item={variant} />
                 ))}
               </tbody>
             </table>

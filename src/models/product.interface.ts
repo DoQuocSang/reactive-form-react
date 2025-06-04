@@ -1,3 +1,5 @@
+import type { IOffer } from "./offer.interface";
+import type { ITag } from "./tag.interface";
 import type { IUploadFile } from "./uploadfile.interface";
 import type { IVariant } from "./variant.interface";
 
@@ -12,7 +14,9 @@ export const DEFAULT_PRODUCT: IProduct = {
   type: undefined,
   images: [],
   variants: [],
+  tags: [],
   visible: false,
+  offer: undefined,
 };
 
 export interface IProduct {
@@ -26,5 +30,7 @@ export interface IProduct {
   type?: number;
   images: IUploadFile[];
   variants: IVariant[];
+  tags: ITag[];
   visible: boolean;
+  offer?: IOffer;
 }

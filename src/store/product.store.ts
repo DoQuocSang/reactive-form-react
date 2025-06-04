@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { PRODUCTS } from "../../data/products.data";
-import { DEFAULT_PRODUCT, type IProduct } from "../../models/product.interface";
+import { PRODUCTS } from "../data/products.data";
+import { DEFAULT_PRODUCT, type IProduct } from "../models/product.interface";
 
 type State = {
   products: IProduct[];

@@ -4,7 +4,7 @@ import {
   preventInvalidValueForNumberInput,
 } from "../../helper/numberInput.helper";
 import type { IRange } from "../../models/range.interface";
-import { useProductStore } from "../store/product.store";
+import { useProductStore } from "../../store/product.store";
 
 export default function VariantForm() {
   const currentVariantId = "";
