@@ -7,7 +7,9 @@ interface UploadFilePreviewProps {
 }
 
 export default function UploadFilePreview({ file }: UploadFilePreviewProps) {
-  function handleDeleteImage(id: string) {}
+  function handleDeleteImage(id: string) {
+    console.log(id)
+  }
   return (
     <div
       className="relative z-0 w-full pb-[100%] overflow-hidden rounded-md shadow-md"
