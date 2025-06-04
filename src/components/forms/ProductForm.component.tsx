@@ -7,79 +7,36 @@ import {
   Image,
   XIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 import VariantTable from "../tables/VariantTable.component";
-import type { IRange } from "../../models/range.interface";
 import {
   autoAdjustValidValueForNumberInput,
   preventInvalidValueForNumberInput,
 } from "../../helper/numberInput.helper";
-import { useProductStore } from "../../store/product.store";
-import { DEFAULT_PRODUCT, type IProduct } from "../../models/product.interface";
-import { useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
 import { BRANDS } from "../../data/brands.data";
 import { TYPES } from "../../data/types.data";
 import { TAGS } from "../../data/tags.data";
-import type { ITag } from "../../models/tag.interface";
-
+import UploadFilePreview from "../upload-file/UploadFilePreview.component";
+import { useProduct } from "../../hooks/useProduct";
 interface IProductFormProps {
   productId: string;
 }
 
 export default function ProductForm({ productId }: IProductFormProps) {
-  const [useUrl, setUseUrl] = useState(false);
-  const [productData, setProductData] = useState<IProduct>(DEFAULT_PRODUCT);
-
-  function toggleUseURL() {
-    setUseUrl(!useUrl);
-  }
-
-  const getProductById = useProductStore((state) => state.getProductById);
-
-  const { register, handleSubmit, watch, reset, control } = useForm<IProduct>();
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "tags",
-  });
-
-  const [inputValue, setInputValue] = useState("");
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const value = inputValue.trim();
-      if (value) {
-        const tag: ITag = {
-          id: "demo",
-          name: value,
-        };
-        append(tag);
-        setInputValue("");
-      }
-    }
-  };
-
-  const handleDelete = (index: number) => {
-    remove(index);
-  };
-
-  const discount = watch("offer.percent") ?? 0;
-
-  const onSubmit: SubmitHandler<IProduct> = (data) => {
-    console.log("Form submitted");
-    console.log(data);
-  };
-
-  const priceRange: IRange = { min: 0, max: 1000000 };
-
-  useEffect(() => {
-    const productResult = getProductById(productId);
-    setProductData(productResult);
-    if (productResult) {
-      reset(productResult);
-    }
-  }, [productId, reset]);
+    const {
+     useUrl,
+    toggleUseURL,
+    register,
+    handleSubmit,
+    productData,
+    discount,
+    priceRange,
+    fields,
+    inputValue,
+    setInputValue,
+    handleKeyDown,
+    handleDelete,
+    onSubmit,
+  } = useProduct(productId);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col justify-center sm:py-16">
@@ -182,7 +139,7 @@ export default function ProductForm({ productId }: IProductFormProps) {
                   ) : (
                     <div className="mt-2 flex items-center justify-center w-full">
                       <label
-                        htmlFor="dropzone-file"
+                        htmlFor="images"
                         className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                       >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -201,14 +158,24 @@ export default function ProductForm({ productId }: IProductFormProps) {
                           </p>
                         </div>
                         <input
-                          id="dropzone-file"
+                          id="images"
+                          multiple
                           type="file"
+                          accept="image/gif, image/jpeg, image/png, image/jpg"
                           className="hidden"
                         />
                       </label>
                     </div>
                   )}
                 </div>
+
+                {productData.images.length > 0 && (
+                  <div className="grid grid-cols-4 gap-4">
+                    {productData.images.map((file) => {
+                      return <UploadFilePreview key={file.id} file={file} />;
+                    })}
+                  </div>
+                )}
 
                 {/* --- Type --- */}
                 <div className="flex flex-col gap-2">

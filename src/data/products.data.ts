@@ -1,162 +1,223 @@
-import type { Product } from "../models/product.interface";
+import type { IProduct } from "../models/product.interface";
 
-export const PRODUCTS: Product[] = [
+export const PRODUCTS: IProduct[] = [
   {
     id: "P001",
-    name: "Nike Air Max 2024",
-    brand: 0, // Nike
+    name: "Nike Air Max 2024 #1",
+    brand: "skechers",
     description: "High-performance running shoes with exceptional cushioning.",
-    weight: 750,
-    dateStock: new Date("2024-09-10"),
-    price: 120,
-    type: 2, // Shoes
-    images: [
-      {
-        id: "I001",
-        name: "S1",
-        size: 0,
-        url: "https://brand.assets.adidas.com/image/upload/v1717008412/Training_SS_24_Strength_global_Launch_What_shoes_should_you_wear_to_the_gym_image_Rapidmove_fc98ca311b.jpg",
-      },
-      {
-        id: "I001",
-        name: "S1",
-        size: 0,
-        url: "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/g/l/0/-original-imahfhnncgghbqp8.jpeg?q=90&crop=false",
-      },
-    ],
-    visible: false,
+    weight: 637,
+    dateStock: "2024-11-04",
+    price: 95,
+    type: "loafers",
+    images: [],
+    visible: true,
     variants: [
-      { id: "V001", color: "#000000", size: 0, quantity: 50 },
-      { id: "V002", color: "#FFFFFF", size: 2, quantity: 30 },
+      { id: "V001", color: "#ea5141", size: 4, quantity: 41 },
+      { id: "V002", color: "#b22469", size: 4, quantity: 48 }
     ],
+    tags: [
+      { id: "tag_0", name: "premium" },
+      { id: "tag_1", name: "sale" }
+    ],
+    offer: { start: "2024-08-01", end: "2024-09-01", percent: 5 }
   },
   {
     id: "P002",
-    name: "Adidas Ultraboost",
-    brand: 1, // Adidas
+    name: "Adidas Ultraboost #2",
+    brand: "vans",
     description: "Comfortable shoes designed for running and casual wear.",
-    weight: 680,
-    dateStock: new Date("2024-10-15"),
-    price: 150,
-    type: 0, // Shoes
+    weight: 822,
+    dateStock: "2024-03-05",
+    price: 110,
+    type: "loafers",
     images: [],
     visible: true,
     variants: [
-      { id: "V003", color: "#0000FF", size: 2, quantity: 20 },
-      { id: "V004", color: "#808080", size: 4, quantity: 25 },
+      { id: "V003", color: "#cf3c9b", size: 1, quantity: 24 },
+      { id: "V004", color: "#664983", size: 4, quantity: 44 }
     ],
+    tags: [
+      { id: "tag_0", name: "sale" },
+      { id: "tag_1", name: "casual" },
+      { id: "tag_2", name: "bestseller" }
+    ],
+    offer: undefined
   },
   {
     id: "P003",
-    name: "Puma RS-X",
-    brand: 2, // Puma
+    name: "Puma RS-X #3",
+    brand: "new_balance",
     description: "Stylish retro-inspired sneakers with a bold design.",
-    weight: 800,
-    dateStock: new Date("2024-09-10"),
-    price: 110,
-    type: 2, // Shoes
+    weight: 836,
+    dateStock: "2024-10-20",
+    price: 135,
+    type: "sandals",
     images: [],
     visible: false,
     variants: [
-      { id: "V005", color: "#FF0000", size: 0, quantity: 40 },
-      { id: "V006", color: "#000000", size: 4, quantity: 35 },
+      { id: "V005", color: "#6fa570", size: 3, quantity: 36 },
+      { id: "V006", color: "#007905", size: 2, quantity: 26 }
     ],
+    tags: [
+      { id: "tag_0", name: "premium" },
+      { id: "tag_1", name: "new" },
+      { id: "tag_2", name: "bestseller" }
+    ],
+    offer: { start: "2024-08-01", end: "2024-09-01", percent: 5 }
   },
   {
     id: "P004",
-    name: "Asics Gel-Nimbus 25",
-    brand: 3, // Asics
+    name: "Asics Gel-Nimbus 25 #4",
+    brand: "asics",
     description: "Premium cushioning shoes for long-distance running.",
-    weight: 720,
-    dateStock: new Date("2024-08-20"),
-    price: 140,
-    type: 0, // Shoes
+    weight: 686,
+    dateStock: "2024-11-18",
+    price: 90,
+    type: "boots",
     images: [],
     visible: true,
-    variants: [],
+    variants: [
+      { id: "V007", color: "#4290a0", size: 0, quantity: 44 },
+      { id: "V008", color: "#3291b9", size: 3, quantity: 36 }
+    ],
+    tags: [
+      { id: "tag_0", name: "bestseller" },
+      { id: "tag_1", name: "limited" }
+    ],
+    offer: undefined
   },
   {
     id: "P005",
-    name: "New Balance 574",
-    brand: 4, // New Balance
+    name: "New Balance 574 #5",
+    brand: "converse",
     description: "Classic shoes with a timeless silhouette.",
-    weight: 600,
-    dateStock: new Date("2024-07-12"),
-    price: 90,
-    type: 2, // Loafer
-    images: [],
-    visible: true,
-    variants: [{ id: "V006", color: "#A52A2A", size: 2, quantity: 20 }],
-  },
-  {
-    id: "P006",
-    name: "Reebok Nano X3",
-    brand: 5, // Reebok
-    description: "Cross-training shoes for all-around performance.",
-    weight: 690,
-    dateStock: new Date("2024-06-30"),
-    price: 130,
-    type: 0, // Shoes
-    images: [],
-    visible: true,
-    variants: [
-      { id: "V007", color: "#000000", size: 3, quantity: 40 },
-      { id: "V008", color: "#FFFFFF", size: 4, quantity: 35 },
-    ],
-  },
-  {
-    id: "P007",
-    name: "Under Armour HOVR",
-    brand: 6, // Under Armour
-    description: "Responsive shoes with energy return technology.",
-    weight: 700,
-    dateStock: new Date("2024-05-18"),
-    price: 135,
-    type: 1, // Boots
-    images: [],
-    visible: true,
-    variants: [{ id: "V009", color: "#808080", size: 1, quantity: 30 }],
-  },
-  {
-    id: "P008",
-    name: "Converse Chuck Taylor",
-    brand: 7, // Converse
-    description: "Classic high-top sneakers for casual wear.",
-    weight: 500,
-    dateStock: new Date("2024-04-10"),
-    price: 60,
-    type: 0, // Shoes
-    images: [],
-    visible: true,
-    variants: [],
-  },
-  {
-    id: "P009",
-    name: "Vans Old Skool",
-    brand: 8, // Vans
-    description: "Iconic skate shoes with a durable design.",
-    weight: 550,
-    dateStock: new Date("2024-03-22"),
-    price: 75,
-    type: 2, // Loafer
+    weight: 629,
+    dateStock: "2024-10-08",
+    price: 95,
+    type: "slippers",
     images: [],
     visible: false,
     variants: [
-      { id: "V10", color: "#0000FF", size: 2, quantity: 50 },
-      { id: "V11", color: "#FF0000", size: 4, quantity: 30 },
+      { id: "V009", color: "#fdeb65", size: 2, quantity: 43 },
+      { id: "V010", color: "#c32cfa", size: 0, quantity: 30 }
     ],
+    tags: [
+      { id: "tag_0", name: "limited" },
+      { id: "tag_1", name: "bestseller" },
+      { id: "tag_2", name: "sale" },
+      { id: "tag_3", name: "premium" }
+    ],
+    offer: { start: "2024-08-01", end: "2024-09-01", percent: 15 }
   },
   {
-    id: "P010",
-    name: "Fila Disruptor II",
-    brand: 9, // Fila
-    description: "Chunky sneakers with a modern twist.",
-    weight: 900,
-    dateStock: new Date("2024-02-15"),
-    price: 95,
-    type: 3, // Sandal
+    id: "P006",
+    name: "Reebok Nano X3 #6",
+    brand: "vans",
+    description: "Cross-training shoes for all-around performance.",
+    weight: 663,
+    dateStock: "2024-12-07",
+    price: 150,
+    type: "boots",
+    images: [],
+    visible: false,
+    variants: [
+      { id: "V011", color: "#f86780", size: 3, quantity: 23 },
+      { id: "V012", color: "#11ca30", size: 2, quantity: 44 }
+    ],
+    tags: [
+      { id: "tag_0", name: "sale" },
+      { id: "tag_1", name: "new" },
+      { id: "tag_2", name: "bestseller" }
+    ],
+    offer: undefined
+  },
+  {
+    id: "P007",
+    name: "Under Armour HOVR #7",
+    brand: "asics",
+    description: "Responsive shoes with energy return technology.",
+    weight: 688,
+    dateStock: "2024-10-07",
+    price: 110,
+    type: "slippers",
     images: [],
     visible: true,
-    variants: [{ id: "V12", color: "#FFFFFF", size: 2, quantity: 25 }],
+    variants: [
+      { id: "V013", color: "#f6fea1", size: 2, quantity: 37 },
+      { id: "V014", color: "#46b08c", size: 3, quantity: 38 }
+    ],
+    tags: [
+      { id: "tag_0", name: "sale" },
+      { id: "tag_1", name: "casual" },
+      { id: "tag_2", name: "bestseller" },
+      { id: "tag_3", name: "new" }
+    ],
+    offer: { start: "2024-08-01", end: "2024-09-01", percent: 0 }
   },
-];
+  {
+    id: "P008",
+    name: "Converse Chuck Taylor #8",
+    brand: "converse",
+    description: "Classic high-top sneakers for casual wear.",
+    weight: 641,
+    dateStock: "2024-08-12",
+    price: 140,
+    type: "sneakers",
+    images: [],
+    visible: true,
+    variants: [
+      { id: "V015", color: "#38a194", size: 1, quantity: 48 },
+      { id: "V016", color: "#c59573", size: 2, quantity: 42 }
+    ],
+    tags: [
+      { id: "tag_0", name: "casual" },
+      { id: "tag_1", name: "bestseller" }
+    ],
+    offer: undefined
+  },
+  {
+    id: "P009",
+    name: "Vans Old Skool #9",
+    brand: "reebok",
+    description: "Iconic skate shoes with a durable design.",
+    weight: 899,
+    dateStock: "2024-08-09",
+    price: 140,
+    type: "slippers",
+    images: [],
+    visible: true,
+    variants: [
+      { id: "V017", color: "#9ddd53", size: 1, quantity: 25 },
+      { id: "V018", color: "#4d2cbd", size: 2, quantity: 38 }
+    ],
+    tags: [
+      { id: "tag_0", name: "new" },
+      { id: "tag_1", name: "casual" },
+      { id: "tag_2", name: "bestseller" },
+      { id: "tag_3", name: "premium" }
+    ],
+    offer: { start: "2024-08-01", end: "2024-09-01", percent: 5 }
+  },
+  {
+    id: "P0010",
+    name: "Fila Disruptor II #10",
+    brand: "nike",
+    description: "Chunky sneakers with a modern twist.",
+    weight: 718,
+    dateStock: "2024-11-24",
+    price: 95,
+    type: "sandals",
+    images: [],
+    visible: false,
+    variants: [
+      { id: "V019", color: "#e151e3", size: 3, quantity: 28 },
+      { id: "V020", color: "#085b32", size: 2, quantity: 40 }
+    ],
+    tags: [
+      { id: "tag_0", name: "premium" },
+      { id: "tag_1", name: "sale" }
+    ],
+    offer: undefined
+  }
+]
