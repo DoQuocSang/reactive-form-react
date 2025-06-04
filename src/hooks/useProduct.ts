@@ -15,15 +15,18 @@ export function useProduct(productId: string) {
   const {
     register,
     handleSubmit,
+    formState: { errors },
     watch,
     reset,
     control,
+    getValues,
+    setValue,
   } = useForm<IProduct>({
     defaultValues: DEFAULT_PRODUCT,
   });
 
   const discount = watch("offer.percent") ?? 0;
-  const priceRange: IRange = { min: 0, max: 1000000 };
+  const priceRange: IRange = { min: 1, max: 1000 };
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -69,6 +72,7 @@ export function useProduct(productId: string) {
 
   return {
     useUrl,
+    errors,
     toggleUseURL,
     register,
     handleSubmit,
@@ -86,5 +90,8 @@ export function useProduct(productId: string) {
     handleKeyDown,
     handleDelete,
     onSubmit,
+    getValues,
+    setValue,
+    setProductData
   };
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import type { IRange } from "../models/range.interface";
 
 export function preventInvalidValueForNumberInput(
@@ -11,15 +13,17 @@ export function preventInvalidValueForNumberInput(
 }
 
 export function autoAdjustValidValueForNumberInput(
-  e: React.FormEvent<HTMLInputElement>,
-  range: IRange
+  getValues: UseFormGetValues<any>,
+  setValue: UseFormSetValue<any>,
+  range: IRange,
+  fieldName: string
 ) {
-  const input = e.target as HTMLInputElement;
-  const value = parseInt(input.value, 10);
+  const raw = getValues(fieldName);
+  const value = typeof raw === "string" ? parseFloat(raw) : Number(raw);
 
   if (value > range.max) {
-    input.value = range.max.toString();
+    setValue(fieldName, range.max);
   } else if (value < range.min) {
-    input.value = range.min.toString();
+    setValue(fieldName, range.min);
   }
 }
