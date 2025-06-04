@@ -6,9 +6,13 @@ interface IVariantRowProps {
 }
 
 export default function VariantRow({ item }: IVariantRowProps) {
-  function openVariantForm(id: string) {}
+  function openVariantForm(id: string) {
+    console.log(id);
+  }
 
-  function deleteVariant(id: string) {}
+  function deleteVariant(id: string) {
+    console.log(id);
+  }
 
   return (
     <tr>

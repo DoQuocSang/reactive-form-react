@@ -1,6 +1,5 @@
 import { ChevronDown, XIcon } from "lucide-react";
 import {
-  autoAdjustValidValueForNumberInput,
   preventInvalidValueForNumberInput,
 } from "../../helper/numberInput.helper";
 import type { IRange } from "../../models/range.interface";
@@ -14,7 +13,6 @@ export default function VariantForm() {
   const isShowVariantForm = useProductStore((state) => state.isShowVariantForm);
   const toggleVariantForm = useProductStore((state) => state.toggleVariantForm);
 
-  function onSubmit() {}
   return (
     <>
       {isShowVariantForm && (
